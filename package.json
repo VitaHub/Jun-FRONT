@@ -33,6 +33,7 @@
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-file-base64": "^1.0.3",
+    "react-loading-indicator": "^1.0.2",
     "react-redux": "4.3.0",
     "react-responsive-audio-player": "^1.1.4",
     "react-router": "^2.0.0-rc5",

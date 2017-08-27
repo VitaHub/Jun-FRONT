@@ -3,13 +3,20 @@ import { Link } from 'react-router';
 import { reduxForm } from 'redux-form';
 import { addSong } from '../actions/index';
 import PromiseFileReader from 'promise-file-reader';
+import LoadingIndicator from 'react-loading-indicator';
 
 class SongsNew extends Component {
+  constructor() {
+    super();
+    this.loading = false;
+  }
+
   static contextTypes = {
     router: PropTypes.object
   };
 
   onSubmit(props) {
+    this.loading = true;
     PromiseFileReader.readAsDataURL(props.audio[0])
       .then((result) => {
         this.props.addSong(
@@ -46,12 +53,18 @@ class SongsNew extends Component {
           <label>Title</label>
           <input type='text' className='form-control' {...title} />
         </div>
-
-        <button type='submit' className='btn btn-primary'>Submit</button>
-
-        <Link to='' className='btn btn-danger'>
-          Cancel
-        </Link>
+        {
+          this.loading ? (
+            <LoadingIndicator />
+          ) : (
+            <div>
+              <button type='submit' className='btn btn-primary'>Submit</button>
+              <Link to='' className='btn btn-danger'>
+                Cancel
+              </Link>
+            </div>
+          )
+        }
       </form>
     );
   }

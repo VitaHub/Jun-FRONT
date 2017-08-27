@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchSongs, ROOT_URL } from '../actions/index';
+import { fetchSongs, deleteSong, ROOT_URL } from '../actions/index';
 import AudioPlayer from './audio_player';
 import { Link } from 'react-router';
 
@@ -22,6 +22,11 @@ class SongsIndex extends Component {
           <button
             className='btn btn-default'>
             Play
+          </button>
+          <button
+            className='btn btn-danger'
+            onClick={() => { this.props.deleteSong(song.id) } }>
+            Delete
           </button>
           {`${song.title} - ${song.author}`}
         </li>
@@ -57,4 +62,4 @@ function mapStateToProps(state) {
   return { songs: state.songs.all };
 }
 
-export default connect(mapStateToProps, { fetchSongs })(SongsIndex);
+export default connect(mapStateToProps, { fetchSongs, deleteSong })(SongsIndex);

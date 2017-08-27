@@ -27,15 +27,6 @@ class SongsNew extends Component {
     return (
       <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) }>
         <h3>Add a New Song</h3>
-        <div className='form-group'>
-          <label>Title</label>
-          <input type='text' className='form-control' {...title} />
-        </div>
-
-        <div className='form-group'>
-          <label>Author</label>
-          <input type='text' className='form-control'  {...author} />
-        </div>
 
         <div className='form-group'>
           <label>Audio</label>
@@ -44,6 +35,16 @@ class SongsNew extends Component {
             className='form-control'
             accept='.mp3'
             onChange={this.props.fields['audio'].onChange} />
+        </div>
+
+        <div className='form-group'>
+          <label>Author</label>
+          <input type='text' className='form-control'  {...author} />
+        </div>
+
+        <div className='form-group'>
+          <label>Title</label>
+          <input type='text' className='form-control' {...title} />
         </div>
 
         <button type='submit' className='btn btn-primary'>Submit</button>

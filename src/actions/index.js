@@ -3,7 +3,17 @@ import axios from 'axios';
 export const FETCH_SONGS = 'FETCH_SONGS';
 export const ADD_SONG = 'ADD_SONG';
 export const DELETE_SONG = 'DELETE_SONG';
-export const ROOT_URL = 'http://localhost:3000';
+
+let root, storage;
+if (window && window.location && window.location.host.match(/localhost/)) {
+  root = 'http://localhost:3000';
+  storage = 'http://localhost:3000';
+} else {
+  root = 'http://localhost:3000';
+  storage = '';
+}
+export const ROOT_URL = root;
+export const STORAGE_ROOT = storage;
 
 export function fetchSongs() {
   const request = axios.get(`${ROOT_URL}/songs`);
@@ -24,7 +34,6 @@ export function addSong(props) {
 }
 
 export function deleteSong(id) {
-  // console.log(`DELETE ${id}`);
   const request = axios.delete(`${ROOT_URL}/songs/${id}`);
 
   return {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchSongs, deleteSong, ROOT_URL } from '../actions/index';
+import { fetchSongs, deleteSong, STORAGE_ROOT } from '../actions/index';
 import AudioPlayer from './audio_player';
 import { Link } from 'react-router';
 
@@ -9,20 +9,17 @@ class SongsIndex extends Component {
     this.props.fetchSongs();
   }
 
-  test() {
-    if (!!this.player) {
-      this.player.togglePause();
-    }
-  }
-
   renderSongs() {
-    return this.props.songs.map((song) => {
+    return this.props.songs.map((song, index) => {
       return (
         <li className='list-group-item' key={song.id}>
-          <button
-            className='btn btn-default'>
-            Play
-          </button>
+          { !!this.player &&
+            <button
+              className='btn btn-default'
+              onClick={() => { this.player.touchSong(index) }}>
+              Play/Pause
+            </button>
+          }
           <button
             className='btn btn-danger'
             onClick={() => { this.props.deleteSong(song.id) } }>
@@ -36,17 +33,15 @@ class SongsIndex extends Component {
 
   render() {
     const playlist = this.props.songs.map((song) => {
-      return { url: `${ROOT_URL}${song.audio_url}`,
+      return { url: `${STORAGE_ROOT}${song.audio_url}`,
                displayText: `${song.title} - ${song.author}` };
-    })
+    });
 
     return (
       <div>
-        Songs
         <AudioPlayer
           playlist={playlist}
           ref={(element) => { this.player = element; }} />
-        <button onClick={ this.test.bind(this) }>Play</button>
         <ul className='list-group'>
           {this.renderSongs()}
         </ul>
@@ -62,4 +57,7 @@ function mapStateToProps(state) {
   return { songs: state.songs.all };
 }
 
-export default connect(mapStateToProps, { fetchSongs, deleteSong })(SongsIndex);
+export default connect(
+  mapStateToProps,
+  { fetchSongs, deleteSong }
+)(SongsIndex);

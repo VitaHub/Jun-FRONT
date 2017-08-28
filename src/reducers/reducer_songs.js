@@ -1,5 +1,5 @@
-const INITIAL_STATE = { all: [], current: null };
-import { FETCH_SONGS, DELETE_SONG } from '../actions/index';
+const INITIAL_STATE = { all: [], current: { index: 50, isPlaying: false } };
+import { FETCH_SONGS, DELETE_SONG, CURRENT_SONG } from '../actions/index';
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
